@@ -8,7 +8,8 @@
         "compile": "tsc -w",
         "dev": "nodemon ./bin/www ",
         "test": "jest",
-        "coverage": "yarn test -- --coverage --watchAll=false"
+        "coverage": "yarn test -- --coverage --watchAll=false",
+        "build":"tsc"
     },
     "license": "MIT",
     "dependencies": {

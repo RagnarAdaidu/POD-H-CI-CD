@@ -6,10 +6,10 @@
         "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
         "lint": "eslint . --ext .ts",
         "compile": "tsc -w",
-        "dev": "nodemon ./bin/www ",
         "test": "jest",
         "coverage": "yarn test -- --coverage --watchAll=false",
-        "build":"tsc"
+        "build": "tsc",
+        "start":"node ./bin/www "
     },
     "license": "MIT",
     "dependencies": {

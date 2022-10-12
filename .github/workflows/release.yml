@@ -1,0 +1,16 @@
+name: Release
+
+on:
+  push:
+    branches: [ "develop" ]
+
+jobs:
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - run: docker build . -t ragzy/pod-h-ci-cd
+    - run: echo "${{ secrets.DOCKERHUB_PASSWORD1 }}" | docker login -u ${{ secrets.DOCKERHUB_USERNAME1 }} --password-stdin
+    - run: docker push ragzy/pod-h-ci-cd

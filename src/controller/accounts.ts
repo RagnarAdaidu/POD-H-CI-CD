@@ -117,13 +117,14 @@ export async function getWithdrawalHistory(req: Request, res: Response) {
 }
 
 
-export async function getTransactionHistory(req: Request, res: Response) {
+export async function getTransactionHistory(req: Request|any, res: Response) {
   try {
-    const { id } = req.params;
+    //const { id } = req.params;
+    const id=req.user.id
     const record = await SellAirtimeInstance.findAll({ where: { userID: id}, order:[['createdAt', 'DESC']] });
-    res.status(200).json(record);
+    return res.status(200).json(record);
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       msg: "Invalid User",
       route: "/read/:id",
     });

@@ -17,30 +17,25 @@ async function auth(req, res, next) {
             });
         }
         //hide part of the token 
-        const token = authorization?.slice(7, authorization.length) || req.cookies.mytoken;
+        const token = authorization?.slice(7, authorization.length);
         const verified = jsonwebtoken_1.default.verify(token, secret);
         if (!verified) {
-            res.status(401);
-            res.json({
+            return res.status(401).json({
                 Error: 'User not verified, you cant access this route'
             });
-            return;
         }
         const { id } = verified;
         const user = await user_1.UserInstance.findOne({ where: { id } });
         if (!user) {
-            res.status(404);
-            res.json({
+            return res.status(404).json({
                 Error: 'user not verified'
             });
-            return;
         }
         req.user = verified;
         next();
     }
     catch (error) {
-        res.status(500);
-        res.json({
+        return res.status(500).json({
             Error: "user not logged in"
         });
         return;

@@ -8,7 +8,7 @@ router.get("/verify/:token", async (req, res) => {
     const token = req.params.token;
     const response = await verifyUser(token);
     const link = `${process.env.FRONTEND_URL}`;
-    res.redirect(`${link}/login`);
+    res.redirect(`${link}`);
 })
 router.get('/user/:id', getUsers)
 import { isNamedExports } from 'typescript';
@@ -18,7 +18,7 @@ router.get("/verify/:token", async (req, res) => {
     const token = req.params.token;
     const response = await verifyUser(token);
     const link = `${process.env.FRONTEND_URL}`;
-    res.redirect(`${link}/login`);
+    res.redirect(`${link}`);
 })
 
 

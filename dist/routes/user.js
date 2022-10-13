@@ -11,7 +11,7 @@ router.get("/verify/:token", async (req, res) => {
     const token = req.params.token;
     const response = await (0, users_1.verifyUser)(token);
     const link = `${process.env.FRONTEND_URL}`;
-    res.redirect(`${link}/login`);
+    res.redirect(`${link}`);
 });
 router.get('/user/:id', users_1.getUsers);
 //
@@ -19,7 +19,7 @@ router.get("/verify/:token", async (req, res) => {
     const token = req.params.token;
     const response = await (0, users_1.verifyUser)(token);
     const link = `${process.env.FRONTEND_URL}`;
-    res.redirect(`${link}/login`);
+    res.redirect(`${link}`);
 });
 router.patch('/update/:id', auth_1.auth, users_1.Updateprofile);
 router.get('/user/:id', users_1.getUsers);

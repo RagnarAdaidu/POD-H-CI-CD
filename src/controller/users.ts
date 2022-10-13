@@ -464,12 +464,6 @@ export async function deleteUser(
 export async function UpdateAdmin(req: Request, res: Response) {
   try {
     const { id } = req.params;
-    const validateResult = updateAdminStatusSchema.validate(req.body, options)
-    if (validateResult.error) {
-      return res.status(400).json({
-        Error: validateResult.error.details[0].message
-      })
-    }
     const record = await UserInstance.findOne({ where: { id } })
     if (!record) {
       return res.status(404).json({

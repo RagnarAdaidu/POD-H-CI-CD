@@ -407,12 +407,6 @@ exports.deleteUser = deleteUser;
 async function UpdateAdmin(req, res) {
     try {
         const { id } = req.params;
-        const validateResult = validation_1.updateAdminStatusSchema.validate(req.body, validation_1.options);
-        if (validateResult.error) {
-            return res.status(400).json({
-                Error: validateResult.error.details[0].message
-            });
-        }
         const record = await user_1.UserInstance.findOne({ where: { id } });
         if (!record) {
             return res.status(404).json({

@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.options = exports.updateStatusSchema = exports.sellAirtimeSchema = exports.createAccountSchema = exports.changePasswordSchema = exports.generateToken = exports.updateWalletSchema = exports.updateProfileSchema = exports.loginSchema = exports.validationSchema = void 0;
+exports.options = exports.updateAdminStatusSchema = exports.updateStatusSchema = exports.sellAirtimeSchema = exports.createAccountSchema = exports.changePasswordSchema = exports.generateToken = exports.updateWalletSchema = exports.updateProfileSchema = exports.loginSchema = exports.validationSchema = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const joi_1 = __importDefault(require("joi"));
@@ -69,6 +69,9 @@ exports.sellAirtimeSchema = joi_1.default.object().keys({
 });
 exports.updateStatusSchema = joi_1.default.object().keys({
     airtimeAmount: joi_1.default.number().required(),
+});
+exports.updateAdminStatusSchema = joi_1.default.object().keys({
+    isAdmin: joi_1.default.boolean().required(),
 });
 exports.options = {
     abortEarly: false,

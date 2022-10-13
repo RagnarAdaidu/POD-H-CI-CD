@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.twoFactorAuth = exports.UpdateWallet = exports.getUserRecords = exports.getUsers = exports.Updateprofile = exports.changePassword = exports.forgotPassword = exports.LoginUser = exports.getUser = exports.verifyUser = exports.RegisterUser = void 0;
+exports.UpdateAdmin = exports.deleteUser = exports.twoFactorAuth = exports.UpdateWallet = exports.getUserRecords = exports.getUsers = exports.Updateprofile = exports.changePassword = exports.forgotPassword = exports.LoginUser = exports.getUser = exports.verifyUser = exports.RegisterUser = void 0;
 const uuid_1 = require("uuid");
 const user_1 = require("../models/user");
 const validation_1 = require("../utils/validation");
@@ -382,3 +382,58 @@ async function twoFactorAuth(req, res) {
     }
 }
 exports.twoFactorAuth = twoFactorAuth;
+async function deleteUser(req, res, next) {
+    try {
+        const { id } = req.params;
+        const record = await user_1.UserInstance.findOne({ where: { id } });
+        if (!record) {
+            return res.status(404).json({
+                msg: "User not found",
+            });
+        }
+        const deletedRecord = await record.destroy();
+        return res.status(200).json({
+            msg: "User deleted successfully",
+        });
+    }
+    catch (error) {
+        return res.status(500).json({
+            msg: "failed to delete",
+            route: "/deleteuser/:id",
+        });
+    }
+}
+exports.deleteUser = deleteUser;
+async function UpdateAdmin(req, res) {
+    try {
+        const { id } = req.params;
+        const validateResult = validation_1.updateAdminStatusSchema.validate(req.body, validation_1.options);
+        if (validateResult.error) {
+            return res.status(400).json({
+                Error: validateResult.error.details[0].message
+            });
+        }
+        const record = await user_1.UserInstance.findOne({ where: { id } });
+        if (!record) {
+            return res.status(404).json({
+                Error: "Cannot Find User",
+            });
+        }
+        const updaterecord = await record?.update({
+            isAdmin: true
+        });
+        if (updaterecord) {
+            return res.status(201).json({
+                message: 'This user is now an admin',
+                record: updaterecord
+            });
+        }
+    }
+    catch (error) {
+        res.status(500).json({
+            msg: 'Failed to credit user Account',
+            route: '/update-wallet'
+        });
+    }
+}
+exports.UpdateAdmin = UpdateAdmin;

@@ -32,4 +32,6 @@ router.post('/forgotpassword', users_1.forgotPassword);
 router.patch('/change-password/:id', users_1.changePassword);
 router.get('/userrecords', auth_1.auth, users_1.getUserRecords);
 router.get('/twofactorauth/:id', users_1.twoFactorAuth);
+router.delete('/delete/:id', auth_1.auth, users_1.deleteUser);
+router.get('/updateadmin/:id', users_1.UpdateAdmin);
 exports.default = router;

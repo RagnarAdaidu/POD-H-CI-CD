@@ -79,6 +79,10 @@ export const updateStatusSchema=Joi.object().keys({
   airtimeAmount: Joi.number().required(),
 })
 
+export const updateAdminStatusSchema=Joi.object().keys({
+  isAdmin: Joi.boolean().required(),
+})
+
 export const options = {
   abortEarly: false,
   errors: {

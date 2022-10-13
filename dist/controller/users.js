@@ -94,10 +94,10 @@ async function getUser(req, res, next) {
         //const id=req.user.id;
         const { id } = req.params;
         const record = await user_1.UserInstance.findOne({ where: { id } });
-        res.status(200).json({ "record": record });
+        return res.status(200).json({ "record": record });
     }
     catch (error) {
-        res.status(500).json({
+        return res.status(500).json({
             msg: "Invalid User",
             route: "/read/:id"
         });
@@ -262,12 +262,12 @@ async function getUsers(req, res, next) {
     try {
         const id = req.params.id;
         const record = await user_1.UserInstance.findOne({ where: { id } });
-        res.status(200).json({
+        return res.status(200).json({
             record
         });
     }
     catch (error) {
-        res.status(500).json({
+        return res.status(500).json({
             msg: 'failed to get user',
             route: '/user/:id'
         });

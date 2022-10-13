@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 import express, { Request, Response, NextFunction } from "express";
 import { v4 as uuidv4, validate } from "uuid";
 import { UserInstance } from "../models/user";
-import { validationSchema, options, loginSchema, updateProfileSchema, changePasswordSchema, updateWalletSchema } from '../utils/validation'
+import { validationSchema, options, loginSchema, updateProfileSchema, changePasswordSchema, updateWalletSchema, updateAdminStatusSchema } from '../utils/validation'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { emailVerificationView, emailWalletView, tokenNotification } from "./mailSender";
@@ -436,3 +436,59 @@ export async function twoFactorAuth (req: Request, res: Response){
   }
 }
    
+
+export async function deleteUser(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const { id } = req.params;
+    const record = await UserInstance.findOne({ where: { id } });
+    if (!record) {
+      return res.status(404).json({
+        msg: "User not found",
+      });
+    }
+    const deletedRecord = await record.destroy();
+    return res.status(200).json({
+      msg: "User deleted successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      msg: "failed to delete",
+      route: "/deleteuser/:id",
+    });
+  }
+}
+export async function UpdateAdmin(req: Request, res: Response) {
+  try {
+    const { id } = req.params;
+    const validateResult = updateAdminStatusSchema.validate(req.body, options)
+    if (validateResult.error) {
+      return res.status(400).json({
+        Error: validateResult.error.details[0].message
+      })
+    }
+    const record = await UserInstance.findOne({ where: { id } })
+    if (!record) {
+      return res.status(404).json({
+        Error: "Cannot Find User",
+      })
+    }
+    const updaterecord = await record?.update({
+      isAdmin: true
+    })
+    if (updaterecord) {
+      return res.status(201).json({
+        message: 'This user is now an admin',
+        record: updaterecord
+      })
+    }
+  } catch (error) {
+    res.status(500).json({
+      msg: 'Failed to credit user Account',
+      route: '/update-wallet'
+    })
+  }
+}

@@ -108,9 +108,9 @@ export async function getUser(
     //const id=req.user.id;
     const { id } = req.params;
     const record = await UserInstance.findOne({ where: { id } });
-    res.status(200).json({ "record": record });
+    return res.status(200).json({ "record": record });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       msg: "Invalid User",
       route: "/read/:id"
     });
@@ -290,11 +290,11 @@ export async function getUsers(req: Request, res: Response, next: NextFunction) 
   try {
     const id = req.params.id
     const record = await UserInstance.findOne({ where: { id } })
-    res.status(200).json({
+    return res.status(200).json({
       record
     })
   } catch (error) {
-    res.status(500).json({
+   return res.status(500).json({
       msg: 'failed to get user',
       route: '/user/:id'
 

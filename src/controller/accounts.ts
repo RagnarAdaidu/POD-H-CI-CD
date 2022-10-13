@@ -119,8 +119,8 @@ export async function getWithdrawalHistory(req: Request, res: Response) {
 
 export async function getTransactionHistory(req: Request|any, res: Response) {
   try {
-    //const { id } = req.params;
-    const id=req.user.id
+    const { id } = req.params;
+    //const id=req.user.id
     const record = await SellAirtimeInstance.findAll({ where: { userID: id}, order:[['createdAt', 'DESC']] });
     return res.status(200).json(record);
   } catch (error) {
